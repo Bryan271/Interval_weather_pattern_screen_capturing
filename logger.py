@@ -19,17 +19,17 @@ class Logger:
         self.log_dir = "logs"
         self.create_log_directory()  # Create the log directory if it doesn't exist
 
-        # Set up the logger
         self.logger = logging.getLogger(log_name)
-        self.logger.setLevel(logging.DEBUG)
+        self.logger.setLevel(logging.INFO)
 
-        # Create a rotating file handler for writing logs with a max size of 5 MB and 3 backup files
-        file_handler = RotatingFileHandler(f"{self.log_dir}/{log_name}.log", maxBytes=5*1024*1024, backupCount=3)
+        if self.logger.handlers:
+            return
+
+        file_handler = RotatingFileHandler(f"{self.log_dir}/{log_name}.log", maxBytes=5*1024*1024, backupCount=3, encoding="utf-8")
         file_handler.setLevel(logging.DEBUG)
 
-        # Create a console handler for printing logs
         console_handler = logging.StreamHandler()
-        console_handler.setLevel(logging.DEBUG)
+        console_handler.setLevel(logging.INFO)
 
         # Create a formatter
         formatter = logging.Formatter('%(asctime)s - %(levelname)s - %(message)s')
