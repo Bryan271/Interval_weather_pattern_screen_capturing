@@ -27,8 +27,14 @@ The Vector Mapping Prototype is a Python program that automates the process of c
    pip install selenium tkinter
    ```
 
-3. Update the `screenshot_directory` variable in the `SeleniumHandler` class (selenium_module.py) with the desired directory path for saving screenshots.
-4. Run the program by executing main.py:
+3. Edit `config.py` to set `SCREENSHOT_DIR` and whether Chrome should run headless.
+4. Install dependencies from `requirements.txt` (inside a venv):
+
+   ```
+   pip install -r requirements.txt
+   ```
+
+5. Run the program by executing main.py:
 
    ```
    python main.py

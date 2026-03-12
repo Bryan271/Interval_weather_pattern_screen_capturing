@@ -1,6 +1,7 @@
 # selenium_module.py
 #Add path to directory for saved screenshots before running.
 from selenium import webdriver
+from selenium.webdriver.chrome.options import Options
 import datetime
 
 from selenium.common.exceptions import TimeoutException, WebDriverException
@@ -10,11 +11,18 @@ from selenium.webdriver.support.ui import WebDriverWait
 from selenium.webdriver.support import expected_conditions as EC
 from selenium.webdriver.common.by import By
 
+from config import SCREENSHOT_DIR, HEADLESS, CHROME_ARGS
+
 class SeleniumHandler:
     def __init__(self, root):
         self.retry_counter = 0
         self.root = root
         self.driver = None
+        self.chrome_options = Options()
+        if HEADLESS:
+            self.chrome_options.add_argument("--headless=new")
+        for arg in CHROME_ARGS:
+            self.chrome_options.add_argument(arg)
         self.cycle_start_time = None
 
 
@@ -49,7 +57,7 @@ class SeleniumHandler:
         start_time = datetime.datetime.now()  # Record the start time for this link
 
         if not self.driver:
-            self.driver = webdriver.Chrome()
+            self.driver = webdriver.Chrome(options=self.chrome_options)
             self.driver.maximize_window()
             try:
                 link, _, _ = self.links[self.current_link_index]
